@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anon - eCommerce Website</title>
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/logo/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+</head>
+<style>
+    root {
+
+/**
+ * colors
+ */
+
+--spanish-gray: hsl(0, 0%, 60%);
+--sonic-silver: hsl(0, 0%, 47%);
+--eerie-black: hsl(0, 0%, 13%);
+--salmon-pink: hsl(353, 100%, 78%);
+--sandy-brown: hsl(29, 90%, 65%);
+--bittersweet: hsl(0, 100%, 70%);
+--ocean-green: hsl(152, 51%, 52%);
+--davys-gray: hsl(0, 0%, 33%);
+--cultured: hsl(0, 0%, 93%);
+--white: hsl(0, 100%, 100%);
+--onyx: hsl(0, 0%, 27%);
+
+/**
+ * typography
+ */
+
+--fs-1: 1.563rem;
+--fs-2: 1.375rem;
+--fs-3: 1.25rem;
+--fs-4: 1.125rem;
+--fs-5: 1rem;
+--fs-6: 0.938rem;
+--fs-7: 0.875rem;
+--fs-8: 0.813rem;
+--fs-9: 0.75rem;
+--fs-10: 0.688rem;
+--fs-11: 0.625rem;
+
+--weight-300: 300;
+--weight-400: 400;
+--weight-500: 500;
+--weight-600: 600;
+--weight-700: 700;
+
+/**
+ * border-radius
+ */
+
+--border-radius-md: 10px;
+--border-radius-sm: 5px;
+
+/**
+ * transition
+ */
+
+--transition-timing: 0.2s ease;
+
+}
+
+
+
+
+
+/*-----------------------------------*\
+#RESET
+\*-----------------------------------*/
+
+*, *::before, *::after {
+margin: 0;
+padding: 0;
+-webkit-box-sizing: border-box;
+        box-sizing: border-box;
+}
+
+a { text-decoration: none; }
+
+li { list-style: none; }
+
+button {
+background: none;
+font: inherit;
+border: none;
+cursor: pointer;
+}
+
+img, ion-icon, button, a { display: block; }
+
+span { display: inline-block; }
+
+html {
+font-family: "Poppins", sans-serif;
+-ms-scroll-chaining: none;
+    overscroll-behavior: contain;
+}
+
+input {
+display: block;
+width: 100%;
+font: inherit;
+}
+
+input::-webkit-input-placeholder { font: inherit; }
+
+input::-moz-placeholder { font: inherit; }
+
+input:-ms-input-placeholder { font: inherit; }
+
+input::-ms-input-placeholder { font: inherit; }
+
+input::placeholder { font: inherit; }
+
+body { background: var(--white); }
+
+/**
+* scrollbar style
+*/
+
+body::-webkit-scrollbar { width: 15px; }
+
+body::-webkit-scrollbar-track {
+background: var(--white);
+border-left: 1px solid var(--cultured);
+}
+
+body::-webkit-scrollbar-thumb {
+background: hsl(0, 0%, 80%);
+border: 3px solid var(--white);
+-webkit-border-radius: 10px;
+        border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
+
+
+
+
+
+/*-----------------------------------*\
+#REUSED STYLE
+\*-----------------------------------*/
+
+.container { padding: 0 15px; }
+
+.has-scrollbar { padding-bottom: 5px; }
+
+.has-scrollbar::-webkit-scrollbar {
+width: 12px; /* for vertical scroll */
+height: 12px; /* for horizontal scroll */
+}
+
+.has-scrollbar::-webkit-scrollbar-thumb {
+background: transparent;
+border: 3px solid var(--white);
+-webkit-border-radius: 20px;
+        border-radius: 20px;
+}
+
+.has-scrollbar:hover::-webkit-scrollbar-thumb { background: hsl(0, 0%, 90%); }
+
+.has-scrollbar::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 80%); }
+
+.title {
+color: var(--eerie-black);
+font-size: var(--fs-5);
+font-weight: var(--weight-600);
+letter-spacing: 0.4px;
+text-transform: capitalize;
+padding-bottom: 10px;
+border-bottom: 1px solid var(--cultured);
+margin-bottom: 30px;
+}
+
+
+
+
+
+/*-----------------------------------*\
+#MAIN
+\*-----------------------------------*/
+
+/**
+* overlay
+*/
+
+.overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100vh;
+background: hsla(0, 0%, 0%, 0.5);
+opacity: 0;
+pointer-events: none;
+z-index: 15;
+-webkit-transition: 0.5s ease;
+-o-transition: 0.5s ease;
+transition: 0.5s ease;
+}
+
+.overlay.active {
+opacity: 1;
+pointer-events: all;
+}
+
+
+
+/**
+* MODAL
+*/
+
+.modal {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100vh;
+background: hsla(0, 0%, 0%, 0.5);
+display: -webkit-box;
+display: -webkit-flex;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-pack: center;
+-webkit-justify-content: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+-webkit-box-align: center;
+-webkit-align-items: center;
+    -ms-flex-align: center;
+        align-items: center;
+opacity: 0;
+visibility: hidden;
+pointer-events: none;
+z-index: 10;
+-webkit-animation: popup 1s ease-in-out 5s forwards;
+        animation: popup 1s ease-in-out 5s forwards;
+}
+
+@-webkit-keyframes popup {
+
+0% {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+100% {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+}
+
+@keyframes popup {
+
+0% {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+100% {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+}
+
+.modal.closed { display: none; }
+
+.modal-close-overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 1;
+}
+
+.newsletter-img { display: none; }
+
+.modal-content {
+position: relative;
+max-width: 350px;
+margin: 20px;
+background: var(--white);
+-webkit-border-radius: var(--border-radius-md);
+        border-radius: var(--border-radius-md);
+overflow: hidden;
+z-index: 2;
+-webkit-animation: scaleUp 0.5s ease-in-out 5s forwards;
+        animation: scaleUp 0.5s ease-in-out 5s forwards;
+}
+
+@-webkit-keyframes scaleUp {
+
+0% { -webkit-transform: scale(0.9); transform: scale(0.9); }
+100% { -webkit-transform: scale(1); transform: scale(1); }
+
+}
+
+@keyframes scaleUp {
+
+0% { -webkit-transform: scale(0.9); transform: scale(0.9); }
+100% { -webkit-transform: scale(1); transform: scale(1); }
+
+}
+
+.modal-close-btn {
+position: absolute;
+top: 15px;
+right: 15px;
+background: var(--salmon-pink);
+color: var(--white);
+font-size: 16px;
+padding: 5px;
+-webkit-border-radius: var(--border-radius-sm);
+        border-radius: var(--border-radius-sm);
+}
+
+.modal-close-btn:hover { opacity: 0.9; }
+
+.modal-close-btn ion-icon { --ionicon-stroke-width: 70px; }
+
+.newsletter {
+padding: 50px 30px;
+text-align: center;
+}
+
+.newsletter-header { margin-bottom: 20px; }
+
+.newsletter-title {
+color: var(--onyx);
+font-size: var(--fs-2);
+font-weight: var(--weight-600);
+margin-bottom: 10px;
+}
+
+.newsletter-desc {
+color: var(--sonic-silver);
+font-size: var(--fs-7);
+line-height: 1.6;
+}
+
+.email-field {
+font-size: var(--fs-7);
+padding: 8px 16px;
+-webkit-border-radius: var(--border-radius-sm);
+        border-radius: var(--border-radius-sm);
+border: 1px solid var(--cultured);
+margin-bottom: 16px;
+}
+
+.btn-newsletter {
+background: var(--eerie-black);
+color: var(--white);
+font-size: var(--fs-7);
+font-weight: var(--weight-600);
+text-transform: uppercase;
+padding: 10px 15px;
+-webkit-border-radius: var(--border-radius-sm);
+        border-radius: var(--border-radius-sm);
+margin: auto;
+-webkit-transition: var(--transition-timing);
+-o-transition: var(--transition-timing);
+transition: var(--transition-timing);
+}
+
+.btn-newsletter:hover { background: var(--salmon-pink); }
+
+
+
+
+
+/**
+* NOTIFICATION TOAST
+*/
+
+.notification-toast {
+position: fixed;
+bottom: 80px;
+left: 20px;
+right: 20px;
+background: var(--white);
+max-width: 300px;
+display: -webkit-box;
+display: -webkit-flex;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-align: start;
+-webkit-align-items: flex-start;
+    -ms-flex-align: start;
+        align-items: flex-start;
+gap: 15px;
+padding: 15px;
+-webkit-border-radius: var(--border-radius-md);
+        border-radius: var(--border-radius-md);
+-webkit-box-shadow: 0 5px 20px hsla(0, 0%, 0%, 0.15);
+        box-shadow: 0 5px 20px hsla(0, 0%, 0%, 0.15);
+-webkit-transform: translateX(-webkit-calc(-100% - 40px));
+    -ms-transform: translateX(calc(-100% - 40px));
+        transform: translateX(calc(-100% - 40px));
+-webkit-transition: 0.5s ease-in-out;
+-o-transition: 0.5s ease-in-out;
+transition: 0.5s ease-in-out;
+z-index: 5;
+-webkit-animation: slideInOut 10s ease-in-out infinite;
+        animation: slideInOut 10s ease-in-out infinite;
+}
+
+@-webkit-keyframes slideInOut {
+
+0%,
+45%,
+100% {
+  -webkit-transform: translateX(-webkit-calc(-100% - 40px));
+          transform: translateX(calc(-100% - 40px));
+  opacity: 0;
+  visibility: hidden;
+}
+
+50%,
+95% {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+}
+
+@keyframes slideInOut {
+
+0%,
+45%,
+100% {
+  -webkit-transform: translateX(-webkit-calc(-100% - 40px));
+          transform: translateX(calc(-100% - 40px));
+  opacity: 0;
+  visibility: hidden;
+}
+
+50%,
+95% {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+}
+
+.notification-toast.closed { display: none; }
+
+.toast-close-btn {
+position: absolute;
+top: 10px;
+right: 10px;
+color: var(--sonic-silver);
+}
+
+.toast-close-btn ion-icon { --ionicon-stroke-width: 50px; }
+
+.toast-banner {
+width: 70px;
+height: 70px;
+border: 1px solid var(--cultured);
+-webkit-border-radius: var(--border-radius-sm);
+        border-radius: var(--border-radius-sm);
+}
+
+.toast-banner img {
+width: 100%;
+height: 100%;
+-o-object-fit: contain;
+   object-fit: contain;
+-o-object-position: center;
+   object-position: center;
+}
+
+.toast-detail {
+width: -webkit-calc(100% - 85px);
+width: calc(100% - 85px);
+padding-right: 10px;
+}
+
+.toast-message {
+font-size: var(--fs-10);
+color: var(--sonic-silver);
+margin-bottom: 8px;
+}
+
+.toast-title {
+font-size: var(--fs-7);
+font-weight: var(--weight-500);
+color: var(--onyx);
+}
+
+.toast-meta {
+font-size: var(--fs-10);
+color: var(--sonic-silver);
+}
+
+
+
+
+
+/*-----------------------------------*\
+#HEADER
+\*-----------------------------------*/
+
+.header-top,
+.header-user-actions,
+.desktop-navigation-menu { display: none; }
+
+.header-main {
+padding: 20px 0;
+border-bottom: 1px solid var(--cultured);
+}
+
+.header-logo { margin-bottom: 20px; }
+
+.header-logo img { margin: auto; }
+
+.header-search-container { position: relative; }
+
+.header-search-container .search-field {
+font-size: var(--fs-7);
+color: var(--onyx);
+padding: 10px 15px;
+padding-right: 50px;
+border: 1px solid var(--cultured);
+-webkit-border-radius: var(--border-radius-md);
+        border-radius: var(--border-radius-md);
+}
+
+.search-field::-webkit-search-cancel-button { display: none; }
+
+.search-btn {
+background: var(--white);
+position: absolute;
+top: 50%;
+right: 2px;
+-webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+color: var(--onyx);
+font-size: 18px;
+padding: 8px 15px;
+-webkit-border-radius: var(--border-radius-md);
+        border-radius: var(--border-radius-md);
+-webkit-transition: color var(--transition-timing);
+-o-transition: color var(--transition-timing);
+transition: color var(--transition-timing);
+}
+
+.search-btn:hover { color: var(--salmon-pink); }
+
+.mobile-bottom-navigation {
+background: var(--white);
+position: fixed;
+bottom: 0;
+left: 50%;
+-webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+width: 100%;
+max-width: 500px;
+margin: auto;
+display: -webkit-box;
+display: -webkit-flex;
+display: -ms-flexbox;
+display: flex;
+-webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+-webkit-box-align: center;
+-webkit-align-items: center;
+    -ms-flex-align: center;
+        align-items: center;
+padding: 5px 0;
+-webkit-box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.25);
+        box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.25);
+z-index: 5;
+}
+
+.mobile-bottom-navigation .action-btn {
+position: relative;
+font-size: 26px;
+color: var(--eerie-black);
+padding: 10px;
+}
+
+.mobile-bottom-navigation .count {
+background: var(--bittersweet);
+color: var(--white);
+position: absolute;
+top: 0;
+right: 0;
+font-size: 12px;
+font-weight: var(--weight-500);
+line-height: 1;
+padding: 2px 4px;
+-webkit-border-radius: 20px;
+        border-radius: 20px;
+}
+
+.mobile-navigation-menu {
+background: var(--white);
+position: fixed;
+top: 0;
+left: -100%;
+width: 100%;
+max-width: 320px;
+height: 100vh;
+padding: 20px;
+-webkit-box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.1);
+        box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.1);
+overflow-y: scroll;
+-ms-scroll-chaining: none;
+    overscroll-behavior: contain;
+visibility: hidden;
+-webkit-transition: 0.5s ease;
+-o-transition: 0.5s ease;
+transition: 0.5s ease;
+z-index: 20;
+}
+
+.mobile-navigation-menu.active {
+left: 0;
+visibility: visible;
+}
+
+.menu-top {
+padding-bottom: 15px;
+margin-bottom: 10px;
+display: -webkit-box;
+display: -webkit-flex;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-pack: justify;
+-webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+        justify-content: space-between;
+-webkit-box-align: center;
+-webkit-align-items: center;
+    -ms-flex-align: center;
+        align-items: center;
+border-bottom: 2px solid var(--cultured);
+}
+
+.menu-top .menu-title {
+color: var(--salmon-pink);
+font-size: var(--fs-4);
+font-weight: var(--weight-600);
+}
+
+.menu-close-btn {
+color: var(--eerie-black);
+font-size: 22px;
+}
+
+.menu-close-btn ion-icon { --ionicon-stroke-width: 50px; }
+
+.mobile-menu-category-list { margin-bottom: 30px; }
+
+.menu-category .accordion-menu {
+width: 100%;
+display: -webkit-box;
+display: -webkit-flex;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-pack: justify;
+-webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+        justify-content: space-between;
+-webkit-box-align: center;
+-webkit-align-items: center;
+    -ms-flex-align: center;
+        align-items: center;
+}
+
+.mobile-menu-category-list .menu-category { border-bottom: 1px solid var(--cultured); }
+
+.mobile-menu-category-list .menu-title {
+color: var(--onyx);
+font-size: var(--fs-6);
+font-weight: var(--weight-500);
+padding: 12px 0;
+}
+
+.accordion-menu > div { font-size: 14px; }
+
+.accordion-menu ion-icon {
+color: var(--onyx);
+--ionicon-stroke-width: 90px;
+}
+
+.accordion-menu.active .add-icon,
+.accordion-menu .remove-icon { display: none; }
+
+.accordion-menu .add-icon,
+.accordion-menu.active .remove-icon { display: block; }
+
+.menu-category .submenu-category-list { margin-left: 10px; }
+
+.submenu-title {
+padding: 6px 0;
+font-size: var(--fs-6);
+color: var(--sonic-silver);
+font-weight: var(--weight-300);
+}
+
+.submenu-title:hover { color: var(--davys-gray); }
+
+.submenu-category-list {
+max-height: 0;
+overflow: hidden;
+visibility: hidden;
+-webkit-transition: 0.5s ease-in-out;
+-o-transition: 0.5s ease-in-out;
+transition: 0.5s ease-in-out;
+}
+
+.submenu-category-list.active {
+max-height: 148px;
+visibility: visible;
+}
+
+.menu-bottom .menu-category-list { margin-bottom: 20px; }
+
+.menu-bottom .menu-category { border-bottom: none; }
+
+.menu-bottom .menu-title {
+font-size: var(--fs-6);
+font-weight: var(--weight-500);
+color: var(--eerie-black);
+padding: 12px 0;
+}
+
+.accordion-menu.active .caret-back { -webkit-transform: rotate(-0.25turn); -ms-transform: rotate(-0.25turn); transform: rotate(-0.25turn); }
+
+.menu-bottom .submenu-category-list {
+border: 1px solid var(--cultured);
+-webkit-border-radius: var(--border-radius-md);
+        border-radius: var(--border-radius-md);
+padding: 0 15px;
+margin-left: 0;
+-webkit-box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.05);
+        box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.05);
+}
+
+.menu-bottom .submenu-category:not(:last-child) { border-bottom: 1px solid var(--cultured); }
+
+.menu-social-container {
+display: -webkit-box;
+display: -webkit-flex;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-pack: center;
+-webkit-justify-content: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+-webkit-box-align: center;
+-webkit-align-items: center;
+    -ms-flex-align: center;
+        align-items: center;
+gap: 10px;
+}
+
+.menu-social-container .social-link {
+background: var(--cultured);
+color: var(--eerie-black);
+font-size: 20px;
+padding: 10px;
+-webkit-border-radius: var(--border-radius-md);
+        border-radius: var(--border-radius-md);
+}
+
+
+
+
+
+/*-----------------------------------*\
+#BANNER
+\*-----------------------------------*/
+
+.banner { margin: 30px 0; }
+
+.slider-container {
+display: -webkit-box;
+display: -webkit-flex;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-align: center;
+-webkit-align-items: center;
+    -ms-flex-align: center;
+        align-items: center;
+gap: 10px;
+-webkit-border-radius: var(--border-radius-md);
+        border-radius: var(--border-radius-md);
+overflow: auto hidden;
+-webkit-scroll-snap-type: inline mandatory;
+    -ms-scroll-snap-type: inline mandatory;
+        scroll-snap-type: inline mandatory;
+overscroll-behavior-inline: contain;
+}
+
+.slider-item {
+position: relative;
+min-width: 100%;
+max-height: 450px;
+aspect-ratio: 1 / 1;
+-webkit-border-radius: var(--border-radius-md);
+        border-radius: var(--border-radius-md);
+overflow: hidden;
+scroll-snap-align: start;
+}
+
+.slider-item .banner-img {
+width: 100%;
+height: 100%;
+-o-object-fit: cover;
+   object-fit: cover;
+-o-object-position: right;
+   object-position: right;
+}
+
+.banner-content {
+background: hsla(0, 0%, 100%, 0.8);
+position: absolute;
+bottom: 25px;
+left: 25px;
+right: 25px;
+padding: 20px 25px;
+-webkit-border-radius: var(--border-radius-md);
+        border-radius: var(--border-radius-md);
+}
+
+.banner-subtitle {
+color: var(--salmon-pink);
+font-size: var(--fs-7);
+font-weight: var(--weight-500);
+text-transform: capitalize;
+letter-spacing: 2px;
+margin-bottom: 10px;
+}
+
+.banner-title {
+color: var(--eerie-black);
+font-size: var(--fs-1);
+text-transform: uppercase;
+line-height: 1;
+margin-bottom: 10px;
+}
+
+.banner-text { display: none; }
+
+.banner-btn {
+background: var(--salmon-pink);
+color: var(--white);
+width: -webkit-max-content;
+width: -moz-max-content;
+width: max-content;
+font-size: var(--fs-11);
+font-weight: var(--weight-600);
+text-transform: uppercase;
+padding: 4px 10px;
+-webkit-border-radius: var(--border-radius-sm);
+        border-radius: var(--border-radius-sm);
+-webkit-transition: var(--transition-timing);
+-o-transition: var(--transition-timing);
+transition: var(--transition-timing);
+}
+
+.banner-btn:hover { background: var(--eerie-black); }
+
+/*-----------------------------------*\
+#FOR FULL SOURCE CODE VISIT ABOVE CREATOR LINK
+\*-----------------------------------*/
+</style>
+<body>
+  <div class="overlay" data-overlay></div>
+
+  <div class="modal" data-modal>
+
+    <div class="modal-close-overlay" data-modal-overlay></div>
+
+    <div class="modal-content">
+
+      <button class="modal-close-btn" data-modal-close>
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+
+      <div class="newsletter-img">
+        <img src="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/newsletter.png" alt="subscribe newsletter" width="400" height="400">
+      </div>
+
+      <div class="newsletter">
+
+        <form action="#">
+
+          <div class="newsletter-header">
+
+            <h3 class="newsletter-title">Subscribe Newsletter.</h3>
+
+            <p class="newsletter-desc">
+              Subscribe the <b>Anon</b> to get latest products and discount update.
+            </p>
+
+          </div>
+
+          <input type="email" name="email" class="email-field" placeholder="Email Address" required>
+
+          <button type="submit" class="btn-newsletter">Subscribe</button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+  <div class="notification-toast" data-toast>
+
+    <button class="toast-close-btn" data-toast-close>
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+
+    <div class="toast-banner">
+      <img src="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/products/jewellery-1.jpg" alt="Rose Gold Earrings" width="80" height="70">
+    </div>
+
+    <div class="toast-detail">
+
+      <p class="toast-message">
+        Someone in new just bought
+      </p>
+
+      <p class="toast-title">
+        Rose Gold Earrings
+      </p>
+
+      <p class="toast-meta">
+        <time datetime="PT2M">2 Minutes</time> ago
+      </p>
+
+    </div>
+
+  </div>
+
+  <!--
+    - HEADER
+  -->
+
+  <header>
+
+    <div class="header-top">
+
+      <div class="container">
+
+        <ul class="header-social-container">
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+        <div class="header-alert-news">
+          <p>
+            <b>Free Shipping</b>
+            This Week Order Over - $55
+          </p>
+        </div>
+
+        <div class="header-top-actions">
+
+          <select name="currency">
+
+            <option value="usd">USD $</option>
+            <option value="eur">EUR €</option>
+
+          </select>
+
+          <select name="language">
+
+            <option value="en-US">English</option>
+            <option value="es-ES">Español</option>
+            <option value="fr">Français</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="header-main">
+
+      <div class="container">
+
+        <a href="#" class="header-logo">
+          <img src="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/logo/logo.svg" alt="Anon's logo" width="120" height="36">
+        </a>
+
+        <div class="header-search-container">
+
+          <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
+
+          <button class="search-btn">
+            <ion-icon name="search-outline"></ion-icon>
+          </button>
+
+        </div>
+
+        <div class="header-user-actions">
+
+          <button class="action-btn">
+            <ion-icon name="person-outline"></ion-icon>
+          </button>
+
+          <button class="action-btn">
+            <ion-icon name="heart-outline"></ion-icon>
+            <span class="count">0</span>
+          </button>
+
+          <button class="action-btn">
+            <ion-icon name="bag-handle-outline"></ion-icon>
+            <span class="count">0</span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <nav class="desktop-navigation-menu">
+
+      <div class="container">
+
+        <ul class="desktop-menu-category-list">
+
+          <li class="menu-category">
+            <a href="#" class="menu-title">Home</a>
+          </li>
+
+          <li class="menu-category">
+            <a href="#" class="menu-title">Categories</a>
+
+            <div class="dropdown-panel">
+
+              <ul class="dropdown-panel-list">
+
+                <li class="menu-title">
+                  <a href="#">Electronics</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Desktop</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Laptop</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Camera</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Tablet</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Headphone</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">
+                    <img src="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/electronics-banner-1.jpg" alt="headphone collection" width="250"
+                      height="119">
+                  </a>
+                </li>
+
+              </ul>
+
+              <ul class="dropdown-panel-list">
+
+                <li class="menu-title">
+                  <a href="#">Men's</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Formal</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Casual</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Sports</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Jacket</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Sunglasses</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">
+                    <img src="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/mens-banner.jpg" alt="men's fashion" width="250" height="119">
+                  </a>
+                </li>
+
+              </ul>
+
+              <ul class="dropdown-panel-list">
+
+                <li class="menu-title">
+                  <a href="#">Women's</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Formal</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Casual</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Perfume</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Cosmetics</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Bags</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">
+                    <img src="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/womens-banner.jpg" alt="women's fashion" width="250" height="119">
+                  </a>
+                </li>
+
+              </ul>
+
+              <ul class="dropdown-panel-list">
+
+                <li class="menu-title">
+                  <a href="#">Electronics</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Smart Watch</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Smart TV</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Keyboard</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Mouse</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">Microphone</a>
+                </li>
+
+                <li class="panel-list-item">
+                  <a href="#">
+                    <img src="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/electronics-banner-2.jpg" alt="mouse collection" width="250" height="119">
+                  </a>
+                </li>
+
+              </ul>
+
+            </div>
+          </li>
+
+          <li class="menu-category">
+            <a href="#" class="menu-title">Men's</a>
+
+            <ul class="dropdown-list">
+
+              <li class="dropdown-item">
+                <a href="#">Shirt</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Shorts & Jeans</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Safety Shoes</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Wallet</a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li class="menu-category">
+            <a href="#" class="menu-title">Women's</a>
+
+            <ul class="dropdown-list">
+
+              <li class="dropdown-item">
+                <a href="#">Dress & Frock</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Earrings</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Necklace</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Makeup Kit</a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li class="menu-category">
+            <a href="#" class="menu-title">Jewelry</a>
+
+            <ul class="dropdown-list">
+
+              <li class="dropdown-item">
+                <a href="#">Earrings</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Couple Rings</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Necklace</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Bracelets</a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li class="menu-category">
+            <a href="#" class="menu-title">Perfume</a>
+
+            <ul class="dropdown-list">
+
+              <li class="dropdown-item">
+                <a href="#">Clothes Perfume</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Deodorant</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Flower Fragrance</a>
+              </li>
+
+              <li class="dropdown-item">
+                <a href="#">Air Freshener</a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li class="menu-category">
+            <a href="#" class="menu-title">Blog</a>
+          </li>
+
+          <li class="menu-category">
+            <a href="#" class="menu-title">Hot Offers</a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </nav>
+
+    <div class="mobile-bottom-navigation">
+
+      <button class="action-btn" data-mobile-menu-open-btn>
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+
+      <button class="action-btn">
+        <ion-icon name="bag-handle-outline"></ion-icon>
+
+        <span class="count">0</span>
+      </button>
+
+      <button class="action-btn">
+        <ion-icon name="home-outline"></ion-icon>
+      </button>
+
+      <button class="action-btn">
+        <ion-icon name="heart-outline"></ion-icon>
+
+        <span class="count">0</span>
+      </button>
+
+      <button class="action-btn" data-mobile-menu-open-btn>
+        <ion-icon name="grid-outline"></ion-icon>
+      </button>
+
+    </div>
+
+    <nav class="mobile-navigation-menu  has-scrollbar" data-mobile-menu>
+
+      <div class="menu-top">
+        <h2 class="menu-title">Menu</h2>
+
+        <button class="menu-close-btn" data-mobile-menu-close-btn>
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <ul class="mobile-menu-category-list">
+
+        <li class="menu-category">
+          <a href="#" class="menu-title">Home</a>
+        </li>
+
+        <li class="menu-category">
+
+          <button class="accordion-menu" data-accordion-btn>
+            <p class="menu-title">Men's</p>
+
+            <div>
+              <ion-icon name="add-outline" class="add-icon"></ion-icon>
+              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+            </div>
+          </button>
+
+          <ul class="submenu-category-list" data-accordion>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Shirt</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Shorts & Jeans</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Safety Shoes</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Wallet</a>
+            </li>
+
+          </ul>
+
+        </li>
+
+        <li class="menu-category">
+
+          <button class="accordion-menu" data-accordion-btn>
+            <p class="menu-title">Women's</p>
+
+            <div>
+              <ion-icon name="add-outline" class="add-icon"></ion-icon>
+              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+            </div>
+          </button>
+
+          <ul class="submenu-category-list" data-accordion>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Dress & Frock</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Earrings</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Necklace</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Makeup Kit</a>
+            </li>
+
+          </ul>
+
+        </li>
+
+        <li class="menu-category">
+
+          <button class="accordion-menu" data-accordion-btn>
+            <p class="menu-title">Jewelry</p>
+
+            <div>
+              <ion-icon name="add-outline" class="add-icon"></ion-icon>
+              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+            </div>
+          </button>
+
+          <ul class="submenu-category-list" data-accordion>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Earrings</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Couple Rings</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Necklace</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Bracelets</a>
+            </li>
+
+          </ul>
+
+        </li>
+
+        <li class="menu-category">
+
+          <button class="accordion-menu" data-accordion-btn>
+            <p class="menu-title">Perfume</p>
+
+            <div>
+              <ion-icon name="add-outline" class="add-icon"></ion-icon>
+              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+            </div>
+          </button>
+
+          <ul class="submenu-category-list" data-accordion>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Clothes Perfume</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Deodorant</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Flower Fragrance</a>
+            </li>
+
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Air Freshener</a>
+            </li>
+
+          </ul>
+
+        </li>
+
+        <li class="menu-category">
+          <a href="#" class="menu-title">Blog</a>
+        </li>
+
+        <li class="menu-category">
+          <a href="#" class="menu-title">Hot Offers</a>
+        </li>
+
+      </ul>
+
+      <div class="menu-bottom">
+
+        <ul class="menu-category-list">
+
+          <li class="menu-category">
+
+            <button class="accordion-menu" data-accordion-btn>
+              <p class="menu-title">Language</p>
+
+              <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
+            </button>
+
+            <ul class="submenu-category-list" data-accordion>
+
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">English</a>
+              </li>
+
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">Español</a>
+              </li>
+
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">Frençh</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="menu-category">
+            <button class="accordion-menu" data-accordion-btn>
+              <p class="menu-title">Currency</p>
+              <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
+            </button>
+
+            <ul class="submenu-category-list" data-accordion>
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">USD $</a>
+              </li>
+
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">EUR €</a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+
+        <ul class="menu-social-container">
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </nav>
+
+  </header>
+
+
+
+
+
+  <!--
+    - MAIN
+  -->
+
+  <main>
+
+    <!--
+      - BANNER
+    -->
+
+    <div class="banner">
+
+      <div class="container">
+
+        <div class="slider-container has-scrollbar">
+
+          <div class="slider-item">
+
+            <img src="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/banner-1.jpg" alt="women's latest fashion sale" class="banner-img">
+
+            <div class="banner-content">
+
+              <p class="banner-subtitle">Trending item</p>
+
+              <h2 class="banner-title">Women's latest fashion sale</h2>
+
+              <p class="banner-text">
+                starting at $ <b>20</b>.00
+              </p>
+
+              <a href="#" class="banner-btn">Shop now</a>
+
+            </div>
+
+          </div>
+
+          <div class="slider-item">
+
+            <img src="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/banner-2.jpg" alt="modern sunglasses" class="banner-img">
+
+            <div class="banner-content">
+
+              <p class="banner-subtitle">Trending accessories</p>
+
+              <h2 class="banner-title">Modern sunglasses</h2>
+
+              <p class="banner-text">
+                starting at $ <b>15</b>.00
+              </p>
+
+              <a href="#" class="banner-btn">Shop now</a>
+
+            </div>
+
+          </div>
+
+          <div class="slider-item">
+
+            <img src="https://raw.githubusercontent.com/codewithsadee/anon-ecommerce-website/master/assets/images/banner-3.jpg" alt="new fashion summer sale" class="banner-img">
+
+            <div class="banner-content">
+
+              <p class="banner-subtitle">Sale Offer</p>
+
+              <h2 class="banner-title">New fashion summer sale</h2>
+
+              <p class="banner-text">
+                starting at $ <b>29</b>.99
+              </p>
+
+              <a href="#" class="banner-btn">Shop now</a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    <script>
+        'use strict';
+
+// modal variables
+const modal = document.querySelector('[data-modal]');
+const modalCloseBtn = document.querySelector('[data-modal-close]');
+const modalCloseOverlay = document.querySelector('[data-modal-overlay]');
+
+// modal function
+const modalCloseFunc = function () { modal.classList.add('closed') }
+
+// modal eventListener
+modalCloseOverlay.addEventListener('click', modalCloseFunc);
+modalCloseBtn.addEventListener('click', modalCloseFunc);
+
+// notification toast variables
+const notificationToast = document.querySelector('[data-toast]');
+const toastCloseBtn = document.querySelector('[data-toast-close]');
+
+// notification toast eventListener
+toastCloseBtn.addEventListener('click', function () {
+  notificationToast.classList.add('closed');
+});
+
+// mobile menu variables
+const mobileMenuOpenBtn = document.querySelectorAll('[data-mobile-menu-open-btn]');
+const mobileMenu = document.querySelectorAll('[data-mobile-menu]');
+const mobileMenuCloseBtn = document.querySelectorAll('[data-mobile-menu-close-btn]');
+const overlay = document.querySelector('[data-overlay]');
+
+for (let i = 0; i < mobileMenuOpenBtn.length; i++) {
+
+  // mobile menu function
+  const mobileMenuCloseFunc = function () {
+    mobileMenu[i].classList.remove('active');
+    overlay.classList.remove('active');
+  }
+
+  mobileMenuOpenBtn[i].addEventListener('click', function () {
+    mobileMenu[i].classList.add('active');
+    overlay.classList.add('active');
+  });
+
+  mobileMenuCloseBtn[i].addEventListener('click', mobileMenuCloseFunc);
+  overlay.addEventListener('click', mobileMenuCloseFunc);
+
+}
+
+// accordion variables
+const accordionBtn = document.querySelectorAll('[data-accordion-btn]');
+const accordion = document.querySelectorAll('[data-accordion]');
+
+for (let i = 0; i < accordionBtn.length; i++) {
+
+  accordionBtn[i].addEventListener('click', function () {
+
+    const clickedBtn = this.nextElementSibling.classList.contains('active');
+
+    for (let i = 0; i < accordion.length; i++) {
+
+      if (clickedBtn) break;
+
+      if (accordion[i].classList.contains('active')) {
+
+        accordion[i].classList.remove('active');
+        accordionBtn[i].classList.remove('active');
+
+      }
+
+    }
+
+    this.nextElementSibling.classList.toggle('active');
+    this.classList.toggle('active');
+
+  });
+
+}
+    </script>
+            <!--
+    -FOR FULLL SOURCE CODE VISIT ABOVE LINK
+  -->
